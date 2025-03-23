@@ -20,10 +20,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::UILayout()
 {
-    QHBoxLayout *layout = new QHBoxLayout(ui->frame_5);
-    m_waterfallPlot = new WaterfallPlot(ui->frame_5);
+    QHBoxLayout *layout = new QHBoxLayout(ui->framePlots);
+    m_waterfallPlot = new WaterfallPlot(ui->framePlots);
     m_waterfallPlot->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     layout->addWidget(m_waterfallPlot);
-    ui->frame_5->setLayout(layout);
+    ui->framePlots->setLayout(layout);
+
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event)
 
 }

@@ -26,6 +26,7 @@ WaterfallPlot::WaterfallPlot(QWidget *parent)
     customPlot->yAxis->setLabel("Time (s)");
     customPlot->xAxis->setRange(5, 6);
     customPlot->yAxis->setRange(0, 10);
+    customPlot->setBackground(Qt::black);
 
     // Set up a color map
     colorMap = new QCPColorMap(customPlot->xAxis, customPlot->yAxis);
