@@ -17,14 +17,12 @@ CONFIG += c++17
 # INCLUDEPATH += include/
 # VPATH += src/
 SOURCES += \
-    lib/qcustombutton.cpp \
     lib/qcustomplot.cpp \
     main.cpp \
     src/WaterfallPlot.cpp \
     src/mainwindow.cpp
 
 HEADERS += \
-    lib/qcustombutton.h \
     lib/qcustomplot.h \
     src/WaterfallPlot.h \
     src/mainwindow.h

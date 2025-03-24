@@ -26,6 +26,11 @@ WaterfallPlot::WaterfallPlot(QWidget *parent)
     customPlot->yAxis->setLabel("Time (s)");
     customPlot->xAxis->setRange(5, 6);
     customPlot->yAxis->setRange(0, 10);
+    customPlot->xAxis->setLabelColor(Qt::white);
+    customPlot->yAxis->setLabelColor(Qt::white);
+    customPlot->xAxis2->setLabelColor(Qt::white);
+    customPlot->yAxis2->setLabelColor(Qt::white);
+
     customPlot->setBackground(Qt::black);
 
     // Set up a color map
@@ -40,6 +45,7 @@ WaterfallPlot::WaterfallPlot(QWidget *parent)
     colorScale->setType(QCPAxis::atRight);
     colorMap->setColorScale(colorScale);
     colorScale->axis()->setLabel("Magnitude");
+
 
     // Set up a timer to simulate data acquisition
     QTimer *timer = new QTimer(this);
