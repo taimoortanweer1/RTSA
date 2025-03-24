@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>resources/density.png</file>
+        <file>resources/f9Nkd.jpg</file>
+        <file>resources/headline-chrome-music-lab-spectrogram.jpg</file>
+        <file>resources/Knob.png</file>
+        <file>resources/normal.png</file>
+        <file>resources/peakpng.png</file>
+        <file>resources/Screenshot 2025-02-25 214941.png</file>
+        <file>resources/Screenshot 2025-02-25 215827.png</file>
+        <file>resources/Screenshot 2025-02-26 234953.png</file>
+        <file>resources/search.png</file>
+        <file>resources/icon.png</file>
+    </qresource>
+</RCC>
