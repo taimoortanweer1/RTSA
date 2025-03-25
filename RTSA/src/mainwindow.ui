@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1920</width>
-    <height>1020</height>
+    <height>1080</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -141,7 +141,7 @@ QLabel {
               </spacer>
              </item>
              <item row="1" column="1">
-              <widget class="QToolButton" name="toolButton_2">
+              <widget class="QToolButton" name="toolButtonPeaksSelect">
                <property name="minimumSize">
                 <size>
                  <width>60</width>
@@ -182,7 +182,7 @@ QLabel {
               </widget>
              </item>
              <item row="1" column="2">
-              <widget class="QToolButton" name="toolButton">
+              <widget class="QToolButton" name="toolButtonBandScanSelect">
                <property name="minimumSize">
                 <size>
                  <width>60</width>
@@ -848,6 +848,9 @@ color: #FFA600</string>
             <property name="scaledContents">
              <bool>true</bool>
             </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
            </widget>
           </item>
           <item row="1" column="0">
@@ -926,13 +929,16 @@ color: #FFA600</string>
            <height>16777215</height>
           </size>
          </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
          <property name="styleSheet">
           <string notr="true">   QPushButton {
         border: 1px solid #FFA600;
         border-radius: 4px;
         background-color: transparent;
         text-align: center;  /* Align text to bottom */    
-		font: 18pt &quot;Arial&quot;;
+		font: 16pt &quot;Arial&quot;;
        	color: rgb(255, 255,255);
     }
 
@@ -946,8 +952,11 @@ color: #FFA600</string>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
+         <layout class="QGridLayout" name="gridLayout_15">
+          <property name="leftMargin">
+           <number>9</number>
+          </property>
+          <item row="0" column="0">
            <widget class="QStackedWidget" name="stackedWidget">
             <property name="minimumSize">
              <size>
@@ -962,7 +971,7 @@ color: #FFA600</string>
              </size>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="page">
              <property name="styleSheet">
@@ -2103,12 +2112,18 @@ QLabel {
             </widget>
            </widget>
           </item>
-          <item>
+          <item row="1" column="0">
            <widget class="QPushButton" name="pushButton">
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>40</height>
+              <height>38</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
              </size>
             </property>
             <property name="text">
@@ -2181,7 +2196,7 @@ QLabel {
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <property name="spacing">
-           <number>33</number>
+           <number>20</number>
           </property>
           <item>
            <widget class="QToolButton" name="toolButton_8">

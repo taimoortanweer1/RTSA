@@ -20,11 +20,21 @@ MainWindow::~MainWindow()
 
 void MainWindow::UILayout()
 {
+    /**
+     * @brief adding plot to the central frame layout of the mainwindow UI
+     */
     QHBoxLayout *layout = new QHBoxLayout(ui->framePlots);
     m_waterfallPlot = new WaterfallPlot(ui->framePlots);
     m_waterfallPlot->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     layout->addWidget(m_waterfallPlot);
     ui->framePlots->setLayout(layout);
+
+    /**
+     * @brief adding connections of UI components to their corresponding slots
+     */
+    connect(ui->toolButtonPeaksSelect,    &QToolButton::clicked, this, [this]() { ui->stackedWidget->setCurrentIndex(UserSelectIndex::PeakSelect);});
+    connect(ui->toolButtonBandScanSelect, &QToolButton::clicked, this, [this]() { ui->stackedWidget->setCurrentIndex(UserSelectIndex::BandSelect);});
+
 
 }
 
