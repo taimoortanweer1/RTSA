@@ -1,15 +1,25 @@
 <RCC>
     <qresource prefix="/icons">
         <file>resources/density.png</file>
-        <file>resources/f9Nkd.jpg</file>
-        <file>resources/headline-chrome-music-lab-spectrogram.jpg</file>
+        <file>resources/spectrogram.jpg</file>
         <file>resources/Knob.png</file>
+        <file>resources/density1.png</file>
+        <file>resources/icon.png</file>
+        <file>resources/keybaord.png</file>
         <file>resources/normal.png</file>
         <file>resources/peakpng.png</file>
+        <file>resources/Screenshot 2025-02-21 191024.png</file>
+        <file>resources/Screenshot 2025-02-22 220300.png</file>
         <file>resources/Screenshot 2025-02-25 214941.png</file>
         <file>resources/Screenshot 2025-02-25 215827.png</file>
         <file>resources/Screenshot 2025-02-26 234953.png</file>
         <file>resources/search.png</file>
-        <file>resources/icon.png</file>
+        <file>resources/tablepeaks.png</file>
+        <file>resources/wat.png</file>
+        <file>resources/Home.png</file>
+        <file>resources/info.png</file>
+        <file>resources/location.png</file>
+        <file>resources/netowrk.png</file>
+        <file>resources/settings.png</file>
     </qresource>
 </RCC>
