@@ -29,8 +29,8 @@ public:
 private:
     Ui::MainWindow *ui;
     Plotter *m_plotter;
-    QThread m_receiverThread;
-    QThread m_writerThread;
+    QThread *m_receiverThread;
+    QThread *m_writerThread;
     UDPReceiver *m_receiver;
     FileWriter *m_writer;
 

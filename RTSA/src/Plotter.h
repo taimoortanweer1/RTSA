@@ -11,14 +11,14 @@ class Plotter : public QWidget
     Q_OBJECT
 public:
     explicit Plotter(QWidget *parent = nullptr);
-    QCustomPlot *customPlot;
-    QCPColorMap *colorMap;
-    QVector<QVector<double>> data;
+    void setupPlot();
 
 public slots:
-    void updateData();
-signals:
+    void updateSpectrum(const QVector<double>& frequencies, const QVector<double>& amplitudes);
+
 private:
+    QCustomPlot *m_plot;
+
 };
 
 #endif // PLOTTER_H

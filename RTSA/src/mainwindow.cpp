@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     UILayout();
     CoreInit();
-    start();
+   // start();
 }
 
 MainWindow::~MainWindow()
@@ -27,27 +27,38 @@ void MainWindow::CoreInit()
     m_receiver = new UDPReceiver(8); // Using port 12345
     m_writer = new FileWriter();
 
+    m_receiverThread = new QThread;
+    m_writerThread = new QThread;
     // Move workers to threads
-    m_receiver->moveToThread(&m_receiverThread);
-    m_writer->moveToThread(&m_writerThread);
+    m_receiver->moveToThread(m_receiverThread);
+    m_writer->moveToThread(m_writerThread);
 
     // Connect signals and slots
-    connect(&m_receiverThread, &QThread::finished, m_receiver, &QObject::deleteLater);
-    connect(&m_writerThread, &QThread::finished, m_writer, &QObject::deleteLater);
-    connect(m_receiver, &UDPReceiver::fileReady, m_writer, &FileWriter::writeToFile);
-    connect(m_receiver, &UDPReceiver::dataReceived, this, [](const QVector<int32_t> &data, quint32 counter) {
-        qDebug() << "Received packet" << counter << "with" << data.size() << "samples";
-    });
-    connect(m_receiver, &UDPReceiver::packetDropped, this, [](quint32 expected, quint32 received, quint32 total) {
-        qWarning() << "Packet drop - Expected:" << expected << "Received:" << received << "Total drops:" << total;
-    });
-    connect(m_receiver, &UDPReceiver::errorOccurred, this, [](const QString &error) {
-        qWarning() << "Error:" << error;
-    });
+    connect(m_receiverThread, &QThread::finished, m_receiver, &QObject::deleteLater);
+    connect(m_writerThread, &QThread::finished, m_writer, &QObject::deleteLater);
+    //connect(m_receiver, &UDPReceiver::fileReady, m_writer, &FileWriter::writeToFile);
+    // connect(m_receiver, &UDPReceiver::dataReceived, this, [](const QVector<int32_t> &data, quint32 counter) {
+    //     qDebug() << "Received packet" << counter << "with" << data.size() << "samples";
+    // });
+    // connect(m_receiver, &UDPReceiver::packetDropped, this, [](quint32 expected, quint32 received, quint32 total) {
+    //     qWarning() << "Packet drop - Expected:" << expected << "Received:" << received << "Total drops:" << total;
+    // });
+    // connect(m_receiver, &UDPReceiver::errorOccurred, this, [](const QString &error) {
+    //     qWarning() << "Error:" << error;
+    // });
+
+    // Setup UDP receiver
+    connect(m_receiver, &UDPReceiver::spectrumDataReady,
+            m_plotter, &Plotter::updateSpectrum);
+
+    connect(m_receiverThread, &QThread::started, m_receiver, &UDPReceiver::start);
 
     // Start threads
-    m_receiverThread.start();
-    m_writerThread.start();
+    m_receiverThread->start();
+    m_writerThread->start();
+    // Start receiving
+   // m_receiver->start();
+
 }
 
 void MainWindow::start()

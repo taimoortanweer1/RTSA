@@ -1,109 +1,69 @@
-#include "UDPReceiver.h"
+// udpreceiver.cpp
+#include "udpreceiver.h"
 #include <QNetworkDatagram>
-#include <QFile>
-#include <QDebug>
 
 UDPReceiver::UDPReceiver(quint16 port, QObject *parent)
-    : QObject(parent), m_port(port), m_running(false),
-    m_writeBuffer(8200), m_writeBufferIndex(0),
-    m_packetCounter(0), m_dropCounter(0),
-    m_samplesPerPacket(256), m_fftLength(0),
-    m_totalFFTs(0), m_fileNumber(1)
+    : QObject(parent), m_port(port), m_running(false)
 {
     m_socket = new QUdpSocket(this);
-}
-
-UDPReceiver::~UDPReceiver()
-{
-    stop();
+    m_fullSpectrumX.reserve(m_fftSize);
+    m_fullSpectrumY.reserve(m_fftSize);
 }
 
 void UDPReceiver::start()
 {
-    if (m_running) return;
-
-    if (!m_socket->bind(QHostAddress::Any, m_port)) {
-        emit errorOccurred(tr("Failed to bind to port %1").arg(m_port));
-        return;
+    if (!m_running && m_socket->bind(QHostAddress::Any, m_port)) {
+        connect(m_socket, &QUdpSocket::readyRead, this, &UDPReceiver::readPendingDatagrams);
+        m_running = true;
+        m_currentBin = 0;
+        m_fullSpectrumX.clear();
+        m_fullSpectrumY.clear();
     }
-
-    connect(m_socket, &QUdpSocket::readyRead, this, &UDPReceiver::readPendingDatagrams);
-    m_running = true;
-    qDebug() << "UDP receiver started on port" << m_port;
 }
 
 void UDPReceiver::stop()
 {
-    if (!m_running) return;
-
-    m_socket->close();
-    disconnect(m_socket, &QUdpSocket::readyRead, this, &UDPReceiver::readPendingDatagrams);
-    m_running = false;
-    qDebug() << "UDP receiver stopped";
+    if (m_running) {
+        m_socket->close();
+        disconnect(m_socket, &QUdpSocket::readyRead, this, &UDPReceiver::readPendingDatagrams);
+        m_running = false;
+    }
 }
 
 void UDPReceiver::readPendingDatagrams()
 {
     while (m_socket->hasPendingDatagrams()) {
         QNetworkDatagram datagram = m_socket->receiveDatagram();
-        if (!datagram.isValid()) {
-            emit errorOccurred("Invalid datagram received");
-            continue;
+        if (!datagram.isValid()) continue;
+
+        const QByteArray data = datagram.data();
+        if (data.size() != 1056) continue;  // Expecting 1056-byte packets
+
+        const int32_t *packetData = reinterpret_cast<const int32_t*>(data.constData());
+        const int numInts = data.size() / sizeof(int32_t);
+
+        // Extract metadata from header (first 8 int32)
+        const int packetCounter = packetData[1];
+        const int packetIndex = packetData[2];
+        const int totalPackets = packetData[3];
+        const int fftSize = packetData[4];
+
+        // Calculate frequency bin width
+        const double binWidth = (m_f2 - m_f1) / fftSize;
+
+        // Process FFT data (starting after 8-int header)
+        for (int i = 8; i < numInts; i++) {
+            double frequency = m_f1 + (binWidth * m_currentBin++);
+            m_fullSpectrumX.append(frequency);
+            m_fullSpectrumY.append(packetData[i]);  // Raw amplitude
         }
 
-        QByteArray data = datagram.data();
-        if (data.size() < 32) { // Minimum header size (8 int32_t values)
-            emit errorOccurred("Datagram too small");
-            continue;
-        }
-
-        const int32_t *receivedData = reinterpret_cast<const int32_t*>(data.constData());
-        quint32 currentPacketCounter = static_cast<quint32>(receivedData[1]);
-
-        // Check for packet drops
-        if (m_packetCounter != 0 && m_packetCounter != currentPacketCounter) {
-            m_dropCounter += (currentPacketCounter - m_packetCounter);
-            emit packetDropped(m_packetCounter, currentPacketCounter, m_dropCounter);
-        }
-        m_packetCounter = currentPacketCounter + 1;
-
-        // Extract metadata
-        m_fftLength = static_cast<quint32>(receivedData[4]);
-        m_totalFFTs = static_cast<quint32>(receivedData[5]);
-        m_fileNumber = static_cast<quint32>(receivedData[6]);
-
-        // Process data payload (skip 8 int32_t header)
-        int dataItems = (data.size() - 32) / sizeof(int32_t);
-        QVector<int32_t> payload(dataItems);
-        memcpy(payload.data(), receivedData + 8, dataItems * sizeof(int32_t));
-
-        // Emit signal with received data
-        emit dataReceived(payload, currentPacketCounter);
-
-        // Buffer data for file writing
-        if (m_writeBufferIndex + dataItems < static_cast<quint32>(m_writeBuffer.size())) {
-            memcpy(m_writeBuffer.data() + m_writeBufferIndex, payload.data(), dataItems * sizeof(int32_t));
-            m_writeBufferIndex += dataItems;
-        } else {
-            emit errorOccurred("Write buffer overflow");
-        }
-
-        // Check if this is the last packet
-        if (receivedData[2] == (receivedData[3] + 1)) {
-            quint32 totalSamples = m_fftLength * m_totalFFTs;
-            QString filename = QString("%1.csv").arg(m_fileNumber);
-
-            // Ensure we don't exceed buffer bounds
-            if (totalSamples > static_cast<quint32>(m_writeBuffer.size())) {
-                totalSamples = m_writeBuffer.size();
-            }
-
-            QVector<int32_t> fileData(totalSamples);
-            memcpy(fileData.data(), m_writeBuffer.data(), totalSamples * sizeof(int32_t));
-            emit fileReady(filename, fileData);
-
-            // Reset buffer for next file
-            m_writeBufferIndex = 0;
+        // If we've received all packets for this FFT frame
+        if (packetIndex == totalPackets + 1) {
+            emit spectrumDataReady(m_fullSpectrumX, m_fullSpectrumY);
+            m_currentBin = 0;
+            m_fullSpectrumX.clear();
+            m_fullSpectrumY.clear();
         }
     }
 }

@@ -1,9 +1,9 @@
+// udpreceiver.h
 #ifndef UDPRECEIVER_H
 #define UDPRECEIVER_H
 
-#include <QObject>
 #include <QUdpSocket>
-#include <QThread>
+#include <QObject>
 #include <QVector>
 
 class UDPReceiver : public QObject
@@ -12,16 +12,11 @@ class UDPReceiver : public QObject
 
 public:
     explicit UDPReceiver(quint16 port, QObject *parent = nullptr);
-    ~UDPReceiver();
-
     void start();
     void stop();
 
 signals:
-    void dataReceived(const QVector<int32_t> &data, quint32 packetCounter);
-    void fileReady(const QString &filename, const QVector<int32_t> &data);
-    void errorOccurred(const QString &error);
-    void packetDropped(quint32 expected, quint32 received, quint32 totalDrops);
+    void spectrumDataReady(const QVector<double>& frequencies, const QVector<double>& amplitudes);
 
 private slots:
     void readPendingDatagrams();
@@ -30,14 +25,15 @@ private:
     QUdpSocket *m_socket;
     quint16 m_port;
     bool m_running;
-    QVector<int32_t> m_writeBuffer;
-    quint32 m_writeBufferIndex;
-    quint32 m_packetCounter;
-    quint32 m_dropCounter;
-    quint32 m_samplesPerPacket;
-    quint32 m_fftLength;
-    quint32 m_totalFFTs;
-    quint32 m_fileNumber;
+
+    // FFT configuration
+    double m_f1 = 40000000.0;    // 40 MHz
+    double m_f2 = 5900000000.0;  // 5.9 GHz
+    int m_fftSize = 8192;
+    int m_currentBin = 0;
+
+    QVector<double> m_fullSpectrumX;
+    QVector<double> m_fullSpectrumY;
 };
 
 #endif // UDPRECEIVER_H
