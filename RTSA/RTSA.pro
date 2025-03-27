@@ -29,14 +29,14 @@ win32 {
 SOURCES += \
     main.cpp \
     src/FileWriter.cpp \
+    src/Plotter.cpp \
     src/UDPReceiver.cpp \
-    src/WaterfallPlot.cpp \
     src/mainwindow.cpp
 
 HEADERS += \
     src/FileWriter.h \
+    src/Plotter.h \
     src/UDPReceiver.h \
-    src/WaterfallPlot.h \
     src/mainwindow.h
 
 

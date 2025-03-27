@@ -1,16 +1,16 @@
-#ifndef WATERFALLPLOT_H
-#define WATERFALLPLOT_H
+#ifndef PLOTTER_H
+#define PLOTTER_H
 
 #include <QWidget>
 #include <QVector>
 #include <QTimer>
 #include "lib\qcustomplot.h"
 
-class WaterfallPlot : public QWidget
+class Plotter : public QWidget
 {
     Q_OBJECT
 public:
-    explicit WaterfallPlot(QWidget *parent = nullptr);
+    explicit Plotter(QWidget *parent = nullptr);
     QCustomPlot *customPlot;
     QCPColorMap *colorMap;
     QVector<QVector<double>> data;
@@ -21,4 +21,4 @@ signals:
 private:
 };
 
-#endif // WATERFALLPLOT_H
+#endif // PLOTTER_H

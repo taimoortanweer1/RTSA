@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "src/WaterfallPlot.h"
+#include "src/Plotter.h"
 #include "src/UDPReceiver.h"
 #include "src/FileWriter.h"
 
@@ -28,7 +28,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    WaterfallPlot *m_waterfallPlot;
+    Plotter *m_plotter;
     QThread m_receiverThread;
     QThread m_writerThread;
     UDPReceiver *m_receiver;

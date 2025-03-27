@@ -61,9 +61,9 @@ void MainWindow::UILayout()
      * @brief adding plot to the central frame layout of the mainwindow UI
      */
     QHBoxLayout *layout = new QHBoxLayout(ui->framePlots);
-    m_waterfallPlot = new WaterfallPlot(ui->framePlots);
-    m_waterfallPlot->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    layout->addWidget(m_waterfallPlot);
+    m_plotter = new Plotter(ui->framePlots);
+    m_plotter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    layout->addWidget(m_plotter);
     ui->framePlots->setLayout(layout);
 
     /**

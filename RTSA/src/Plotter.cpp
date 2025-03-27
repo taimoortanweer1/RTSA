@@ -1,6 +1,6 @@
-#include "WaterfallPlot.h"
+#include "Plotter.h"
 
-WaterfallPlot::WaterfallPlot(QWidget *parent)
+Plotter::Plotter(QWidget *parent)
     : QWidget{parent}
 {
     // Set up the QCustomPlot widget
@@ -49,11 +49,11 @@ WaterfallPlot::WaterfallPlot(QWidget *parent)
 
     // Set up a timer to simulate data acquisition
     QTimer *timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &WaterfallPlot::updateData);
+    connect(timer, &QTimer::timeout, this, &Plotter::updateData);
     timer->start(1000); // Update every second
 
 }
-void WaterfallPlot::updateData()
+void Plotter::updateData()
 {
     // Simulate new data acquisition
     QVector<double> newData(100);
