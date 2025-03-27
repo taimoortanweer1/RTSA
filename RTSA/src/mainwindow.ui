@@ -1010,10 +1010,11 @@ color: #FFA600</string>
 		font: 18pt &quot;Arial&quot;;
        	color: rgb(255, 255,255);
     }
-
-    QPushButton:pressed {
+    QPushButton:checked {
         background-color: #FFA600;
     }
+
+
 
 QLabel {
 	color: rgb(255, 166, 0);
@@ -1119,7 +1120,7 @@ QLabel {
                     <bool>true</bool>
                    </property>
                    <property name="checked">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </property>
                    <attribute name="buttonGroup">
                     <string notr="true">buttonGroup</string>
@@ -1159,9 +1160,10 @@ QLabel {
        	color: rgb(255, 255,255);
     }
 
-    QPushButton:pressed {
+    QPushButton:checked {
         background-color: #FFA600;
     }
+
 
 QLabel {
 	color: rgb(255, 166, 0);
@@ -1217,7 +1219,7 @@ QLabel {
                     <bool>true</bool>
                    </property>
                    <property name="checked">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </property>
                    <attribute name="buttonGroup">
                     <string notr="true">buttonGroup_2</string>
@@ -1307,9 +1309,10 @@ QLabel {
        	color: rgb(255, 255,255);
     }
 
-    QPushButton:pressed {
+    QPushButton:checked {
         background-color: #FFA600;
     }
+
 
 QLabel {
 	color: rgb(255, 166, 0);
@@ -1402,7 +1405,7 @@ QLabel {
                     <bool>true</bool>
                    </property>
                    <property name="checked">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </property>
                    <attribute name="buttonGroup">
                     <string notr="true">buttonGroup_3</string>
@@ -1455,9 +1458,10 @@ QLabel {
        	color: rgb(255, 255,255);
     }
 
-    QPushButton:pressed {
+    QPushButton:checked {
         background-color: #FFA600;
     }
+
 
 QLabel {
 	color: rgb(255, 166, 0);
@@ -1550,7 +1554,7 @@ QLabel {
                     <bool>true</bool>
                    </property>
                    <property name="checked">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </property>
                    <attribute name="buttonGroup">
                     <string notr="true">buttonGroup_4</string>
@@ -2420,8 +2424,8 @@ QLabel {
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup_4"/>
  </buttongroups>
