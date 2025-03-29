@@ -26,11 +26,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+public slots:
 private:
     Ui::MainWindow *ui;
     Plotter *m_plotter;
     QThread *m_receiverThread;
     QThread *m_writerThread;
+    QThread *m_plottingThread;
+
     UDPReceiver *m_receiver;
     FileWriter *m_writer;
 
@@ -38,6 +41,5 @@ private:
 
     void resizeEvent(QResizeEvent *event);
     void CoreInit();
-    void start();
 };
 #endif // MAINWINDOW_H

@@ -29,18 +29,23 @@ win32 {
 SOURCES += \
     main.cpp \
     src/FileWriter.cpp \
+    src/PlotCanvas.cpp \
+    src/PlotWorker.cpp \
     src/Plotter.cpp \
     src/UDPReceiver.cpp \
     src/mainwindow.cpp
 
 HEADERS += \
     src/FileWriter.h \
+    src/PlotCanvas.h \
+    src/PlotWorker.h \
     src/Plotter.h \
     src/UDPReceiver.h \
     src/mainwindow.h
 
 
 FORMS += \
+    src/PlotCanvas.ui \
     src/mainwindow.ui
 
 # Default rules for deployment.
