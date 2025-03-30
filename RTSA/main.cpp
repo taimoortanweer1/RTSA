@@ -1,5 +1,4 @@
 #include "src/mainwindow.h"
-#include "src/PlotCanvas.h"
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
@@ -17,12 +16,8 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    // MainWindow w;
-    // w.show();
-
-
-    PlotCanvas w;
-    w.show();;
+    MainWindow w;
+    w.show();
 
 
     return a.exec();

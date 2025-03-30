@@ -23,7 +23,7 @@ MainWindow::~MainWindow()
 void MainWindow::CoreInit()
 {
     // Create worker objects
-    m_receiver = new UDPReceiver(800); // Using port 12345
+    m_receiver = new UDPReceiver(8); // Using port 12345
     m_writer = new FileWriter();
 
     m_receiverThread = new QThread;
@@ -40,8 +40,7 @@ void MainWindow::CoreInit()
 
 
     // Setup UDP receiver
-    connect(m_receiver, &UDPReceiver::spectrumDataReady,
-            m_plotter, &Plotter::updateSpectrum);
+    connect(m_receiver, &UDPReceiver::spectrumDataReady,m_plotter, &Plotter::updateSpectrum);
 
     connect(m_receiverThread, &QThread::started, m_receiver, &UDPReceiver::start);
 
