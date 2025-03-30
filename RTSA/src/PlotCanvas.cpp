@@ -40,7 +40,7 @@ PlotCanvas::PlotCanvas(QWidget *parent)
 
             // Set initial range (40MHz to 5.9GHz)
             customPlot->xAxis->setRange(0, 8000000000);
-            customPlot->yAxis->setRange(0, 1000);  // Will auto-scale later
+            customPlot->yAxis->setRange(-200, 300);  // Will auto-scale later
             customPlot->xAxis->setLabelColor(Qt::white);
             customPlot->yAxis->setLabelColor(Qt::white);
             customPlot->xAxis2->setLabelColor(Qt::yellow);
@@ -60,8 +60,8 @@ PlotCanvas::PlotCanvas(QWidget *parent)
         customPlot->graph(0)->setData(x, y);
 
         // Auto-scale Y axis
-        auto yMinMax = std::minmax_element(y.constBegin(), y.constEnd());
-        customPlot->yAxis->setRange(*yMinMax.first, *yMinMax.second);
+        // auto yMinMax = std::minmax_element(y.constBegin(), y.constEnd());
+        // customPlot->yAxis->setRange(*yMinMax.first, *yMinMax.second);
 
 
         customPlot->replot();
