@@ -2,9 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "src/Plotter.h"
-#include "src/UDPReceiver.h"
-#include "src/FileWriter.h"
+#include "Plotter.h"
+#include "UDPReceiver.h"
+#include "FileWriter.h"
+#include "DataProcessor.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -36,7 +37,7 @@ private:
 
     UDPReceiver *m_receiver;
     FileWriter *m_writer;
-
+    DataProcessor *m_processor;
     void UILayout();
 
     void resizeEvent(QResizeEvent *event);

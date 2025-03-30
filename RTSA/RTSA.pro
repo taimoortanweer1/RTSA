@@ -28,15 +28,18 @@ win32 {
 # VPATH += src/
 SOURCES += \
     main.cpp \
+    src/DataProcessor.cpp \
     src/FileWriter.cpp \
     src/Plotter.cpp \
     src/UDPReceiver.cpp \
     src/mainwindow.cpp
 
 HEADERS += \
+    src/DataProcessor.h \
     src/FileWriter.h \
     src/Plotter.h \
     src/UDPReceiver.h \
+    src/data.h \
     src/mainwindow.h
 
 
