@@ -51,7 +51,7 @@ void Plotter::setupWaterfallPlot()
     m_plot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
 }
 
-void Plotter::setupPlot()
+void Plotter::setupSpectrumPlot()
 {
     m_plot->addGraph();
     m_plot->graph(0)->setPen(QPen(Qt::blue));

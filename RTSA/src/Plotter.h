@@ -11,20 +11,20 @@ class Plotter : public QWidget
     Q_OBJECT
 public:
     explicit Plotter(QWidget *parent = nullptr);
-    void setupPlot();
     QCustomPlot *m_plot;
 
 signals:
      void replotNeeded();
 
 public slots:
-    void updateSpectrum(const QVector<double>& frequencies, const QVector<double>& amplitudes);
-
+    void updateSpectrum (const QVector<double> &frequencies, const QVector<double> &amplitudes);
     void updateWaterfall(const QVector<double> &frequencies, const QVector<double> &amplitudes);
+
 private:
 
-
+    void setupSpectrumPlot();
     void setupWaterfallPlot();
+
     QCPColorMap *m_colorMap;
     QCPColorScale *m_colorScale;
     int m_maxTimePoints = 10;
