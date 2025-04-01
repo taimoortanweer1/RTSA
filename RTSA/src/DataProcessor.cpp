@@ -1,5 +1,5 @@
 #include "DataProcessor.h"
-
+#include <QDebug>
 DataProcessor::DataProcessor(QObject *parent)
     : QObject{parent}
 {
@@ -11,10 +11,6 @@ DataProcessor::DataProcessor(QObject *parent)
 void DataProcessor::dataProcessingReady(const QByteArray &data)
 {
 
-    // m_currentBin = 0;
-    // m_fullSpectrumX.clear();
-    // m_fullSpectrumY.clear();
-
     const int32_t *packetData = reinterpret_cast<const int32_t*>(data.constData());
     const int numInts = data.size() / sizeof(int32_t);
 
@@ -24,6 +20,9 @@ void DataProcessor::dataProcessingReady(const QByteArray &data)
     const int totalPackets = packetData[3];
     const int fftSize = packetData[4];
 
+
+
+    //FFT PLOT
     // Calculate frequency bin width
     const double binWidth = (m_f2 - m_f1) / fftSize;
 
@@ -41,5 +40,9 @@ void DataProcessor::dataProcessingReady(const QByteArray &data)
         m_fullSpectrumX.clear();
         m_fullSpectrumY.clear();
     }
+
+    //emit waterfallDataReady(m_fullSpectrumX, m_waterfallData); // New signal to update waterfall
+
+
 
 }

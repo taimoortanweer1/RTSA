@@ -44,7 +44,8 @@ void MainWindow::CoreInit()
 
     // Setup flow
     connect(m_receiver, &UDPReceiver::rawDataReady,m_processor, &DataProcessor::dataProcessingReady);
-    connect(m_processor, &DataProcessor::spectrumDataReady,m_plotter, &Plotter::updateSpectrum);
+    //connect(m_processor, &DataProcessor::spectrumDataReady,m_plotter, &Plotter::updateSpectrum);
+    connect(m_processor, &DataProcessor::spectrumDataReady ,m_plotter, &Plotter::updateWaterfall);
 
 
     // Start threads

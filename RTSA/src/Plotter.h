@@ -20,9 +20,17 @@ signals:
 public slots:
     void updateSpectrum(const QVector<double>& frequencies, const QVector<double>& amplitudes);
 
+    void updateWaterfall(const QVector<double> &frequencies, const QVector<double> &amplitudes);
 private:
 
 
+    void setupWaterfallPlot();
+    QCPColorMap *m_colorMap;
+    QCPColorScale *m_colorScale;
+    int m_maxTimePoints = 10;
+    QVector<double> m_frequencies;
+    QVector<QVector<double>> m_data;
+    void updatePlot();
 };
 
 #endif // PLOTTER_H

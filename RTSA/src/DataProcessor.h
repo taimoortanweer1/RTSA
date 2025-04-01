@@ -15,7 +15,7 @@ public slots:
 
 signals:
     void spectrumDataReady(const QVector<double>& frequencies, const QVector<double>& amplitudes);
-
+    void waterfallDataReady(const QVector<double>& frequencies, QVector<QVector<double>> &m_waterfallData);
 private:
     int plotIndex;
     // FFT configuration
@@ -26,6 +26,10 @@ private:
 
     QVector<double> m_fullSpectrumX;
     QVector<double> m_fullSpectrumY;
+    //WATERFALL PLOT
+    QVector<QVector<double>> m_waterfallData;
+    int m_maxWaterfallLines = 200; // Adjust based on how many lines you want to keep
+
 };
 
 #endif // DATAPROCESSOR_H
