@@ -3,10 +3,10 @@
 
 
 enum PlotMode {
-    Normal = 0,
+    Spectrum = 0,
     Density,
-    Spectrum,
     SpectrumDensity,
-    PVT
+    PVT,
+    Normal,
 };
 #endif // DATA_H
