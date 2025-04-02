@@ -2,7 +2,7 @@
 #define DATA_H
 
 
-enum PlotType {
+enum PlotMode {
     Normal = 0,
     Density,
     Spectrum,

@@ -45,7 +45,7 @@ void MainWindow::CoreInit()
     // Setup flow
     connect(m_receiver, &UDPReceiver::rawDataReady,m_processor, &DataProcessor::dataProcessingReady);
     //connect(m_processor, &DataProcessor::spectrumDataReady,m_plotter, &Plotter::updateSpectrum);
-    connect(m_processor, &DataProcessor::spectrumDataReady ,m_plotter, &Plotter::updateWaterfall);
+    connect(m_processor, &DataProcessor::spectrumDataReady ,m_plotter, &Plotter::updatePlots);
 
 
     // Start threads
@@ -73,6 +73,9 @@ void MainWindow::UILayout()
      */
     connect(ui->toolButtonPeaksSelect,    &QToolButton::clicked, this, [this]() { ui->stackedWidget->setCurrentIndex(UserSelectIndex::PeakSelect);});
     connect(ui->toolButtonBandScanSelect, &QToolButton::clicked, this, [this]() { ui->stackedWidget->setCurrentIndex(UserSelectIndex::BandSelect);});
+    connect(ui->toolButtonDensity, &QToolButton::clicked, this, [this]() { m_plotter->setPlotMode(PlotMode::Density);  });
+    connect(ui->toolButtonSpectrum, &QToolButton::clicked, this, [this]() { m_plotter->setPlotMode(PlotMode::Spectrum); });
+    connect(ui->toolButtonDensity, &QToolButton::clicked, this, [this]() { m_plotter->setPlotMode(PlotMode::SpectrumDensity);  });
 
 
 }

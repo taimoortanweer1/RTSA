@@ -329,7 +329,7 @@ QLabel {
               </widget>
              </item>
              <item row="1" column="2">
-              <widget class="QToolButton" name="toolButton_5">
+              <widget class="QToolButton" name="toolButtonDensity">
                <property name="minimumSize">
                 <size>
                  <width>60</width>
@@ -370,7 +370,7 @@ QLabel {
               </widget>
              </item>
              <item row="1" column="3">
-              <widget class="QToolButton" name="toolButton_6">
+              <widget class="QToolButton" name="toolButtonSpectrum">
                <property name="minimumSize">
                 <size>
                  <width>60</width>
@@ -411,7 +411,7 @@ QLabel {
               </widget>
              </item>
              <item row="1" column="4">
-              <widget class="QToolButton" name="toolButton_4">
+              <widget class="QToolButton" name="toolButtonDensitySpectrum">
                <property name="minimumSize">
                 <size>
                  <width>60</width>
@@ -2436,9 +2436,9 @@ QLabel {
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>

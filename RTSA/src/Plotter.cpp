@@ -16,17 +16,65 @@ Plotter::Plotter(QWidget *parent)
 
     //setupPlot();
 
-    setupWaterfallPlot();
+    //setupWaterfallPlot();
+    setPlotMode(PlotMode::Spectrum);
+    //setPlotMode(PlotMode::Density);
 
-
+    setupPlot(m_plotMode);
 }
 
-void Plotter::setupWaterfallPlot()
+
+void Plotter::setupPlot(int plotMode) {
+    // Clear the existing plot
+    // m_plot->clearPlottables();
+    // m_plot->clearItems();
+    m_plot->clearItems();
+
+    // Remove all layouts and axes if they exist
+    //m_plot->plotLayout()->clear();
+
+    if (plotMode == PlotMode::Spectrum) {
+        // Spectrum plot only
+        setupSpectrumPlot(nullptr);
+    }
+    else if (plotMode == PlotMode::Density) {
+        // Waterfall plot only
+        setupWaterfallPlot(nullptr);
+    }
+    else if (plotMode == PlotMode::SpectrumDensity) {
+        // Both plots in vertical layout
+        QCPLayoutGrid *topLevelLayout = new QCPLayoutGrid;
+        m_plot->plotLayout()->addElement(topLevelLayout);
+
+        // Spectrum plot at top
+        QCPAxisRect *spectrumAxisRect = new QCPAxisRect(m_plot);
+        topLevelLayout->addElement(0, 0, spectrumAxisRect);
+
+        // Waterfall plot at bottom
+        QCPAxisRect *waterfallAxisRect = new QCPAxisRect(m_plot);
+        topLevelLayout->addElement(1, 0, waterfallAxisRect);
+
+        setupWaterfallPlot(waterfallAxisRect);
+        setupSpectrumPlot(spectrumAxisRect);
+    }
+
+}
+PlotMode Plotter::getPlotMode()
 {
+    return m_plotMode;
+}
+
+void Plotter::setupWaterfallPlot( QCPAxisRect *axisRect = nullptr )
+{
+
+    if (!axisRect) {
+        // axisRect = m_plot->axisRect(); // Use default axis rect if none provided
+    }
     // Clear existing plots
-    //m_plot->addGraph();
-    //m_plot->graph(0)->setPen(QPen(Qt::blue));
-    //m_plot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
+    m_plot->addGraph();
+    m_plot->graph(0)->setPen(QPen(Qt::blue));
+    m_plot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
+    m_plot->setBackground(Qt::black);
 
     // Create color map
     m_colorMap = new QCPColorMap(m_plot->xAxis, m_plot->yAxis);
@@ -51,8 +99,12 @@ void Plotter::setupWaterfallPlot()
     m_plot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
 }
 
-void Plotter::setupSpectrumPlot()
+void Plotter::setupSpectrumPlot(QCPAxisRect *axisRect = nullptr)
 {
+
+    if (!axisRect) {
+        axisRect = m_plot->axisRect(); // Use default axis rect if none provided
+    }
     m_plot->addGraph();
     m_plot->graph(0)->setPen(QPen(Qt::blue));
     m_plot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
@@ -124,6 +176,26 @@ void Plotter::updateWaterfall(const QVector<double>& frequencies,
     updatePlot();
 
 }
+
+void Plotter::updatePlots(const QVector<double>& frequencies,
+                          const QVector<double>& amplitudes)
+{
+    if (m_plotMode == PlotMode::Spectrum || m_plotMode == PlotMode::SpectrumDensity) {
+        updateSpectrum(frequencies,amplitudes);
+    }
+    if (m_plotMode == PlotMode::Density || m_plotMode == PlotMode::SpectrumDensity) {
+        updateWaterfall(frequencies,amplitudes);
+    }
+    m_plot->replot();
+}
+
+void Plotter::setPlotMode(PlotMode mode)
+{
+    m_plotMode = mode;
+    setupPlot(m_plotMode);
+
+}
+
 void Plotter::updatePlot() {
     if (m_data.empty() || m_frequencies.empty()) return;
 
@@ -152,5 +224,5 @@ void Plotter::updatePlot() {
     m_colorMap->setDataRange(QCPRange(minVal, maxVal));
 
     m_plot->rescaleAxes();
-    m_plot->replot();
+   // m_plot->replot();
 }
