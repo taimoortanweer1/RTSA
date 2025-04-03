@@ -26,14 +26,14 @@ private:
     QCPColorScale            *m_colorScale;
     int                      m_maxTimePoints = 10;
     QVector<double>          m_frequencies;
-    QVector<QVector<double>> m_data;
+    QVector<QVector<double>> m_dataWaterfall;
     PlotMode                 m_plotMode;
-    QCustomPlot              *m_plot;
+    QCustomPlot              *m_plot[2];
 
-    void setupSpectrumPlot(QCPAxisRect *axisRect);
-    void setupWaterfallPlot(QCPAxisRect *axisRect);
+    void setupSpectrumPlot(QCustomPlot *plot);
+    void setupWaterfallPlot(QCustomPlot *plot);
     PlotMode getPlotMode();
-    void updatePlot();
+    void updatePlotWaterfall();
     void setupPlot(int plotMode);
 };
 
